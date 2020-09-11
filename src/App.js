@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Header from "./components/Header";
+import Form from "./components/Form";
+import ListOfTasks from "./components/ListOfTasks";
 
-function App() {
+const App = () => {
+  const [tasks, setTasks] = useState([]);
+  const [status, setStatus] = useState("all");
+
+  useEffect(() => {
+    const local = JSON.parse(localStorage.getItem("tasks"));
+    setTasks(local);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  const showItems = tasks.filter((task) =>
+    status === "all" ? task : task.status === status
+  );
+  const count = tasks.filter((task) => task.status === "pending");
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Form tasks={tasks} setTasks={setTasks} />
+      <ListOfTasks
+        count={count.length}
+        tasks={showItems}
+        status={status}
+        setStatus={setStatus}
+        setTasks={setTasks}
+      />
     </div>
   );
-}
+};
 
 export default App;
