@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useRef } from "react";
 
 const Form = ({ tasks, setTasks }) => {
-  const taskRef = React.createRef();
-  const deadlineRef = React.createRef();
+  const taskRef = useRef();
+  const deadlineRef = useRef();
+
   const addNewTask = (e) => {
     e.preventDefault();
+    const deadline =
+      deadlineRef.current.value === "" ? "today" : deadlineRef.current.value;
+
     const task = {
       name: taskRef.current.value,
       id: Date.now(),
-      deadline: deadlineRef.current.defaultValue,
+      deadline,
       status: "pending",
     };
     setTasks([...tasks, task]);
@@ -27,12 +31,7 @@ const Form = ({ tasks, setTasks }) => {
           type="text"
           placeholder="new task ... "
         />
-        <input
-          name="deadline"
-          ref={deadlineRef}
-          type="datetime-local"
-          defaultValue="today"
-        />
+        <input name="deadline" ref={deadlineRef} type="datetime-local" />
         <button type="submit" className="main-form_btn">
           + Add Task
         </button>
