@@ -14,7 +14,7 @@ const ListOfItems = ({ tasks, setTasks, setStatus, status, count }) => {
           <CSSTransition
             classNames="task"
             key={i}
-            timeout={{ enter: 250, exit: 250 }}
+            timeout={{ enter: 2500, exit: 2500 }}
           >
             <Task key={i} task={task} tasks={tasks} setTasks={setTasks} />
           </CSSTransition>

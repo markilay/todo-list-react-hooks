@@ -90,9 +90,6 @@ input[name="deadline"] {
 .list-of-tasks {
   display: grid;
   justify-items: center;
-}
-
-.task-list {
   list-style-type: none;
   margin-top: 20px;
   font-family: "Gotu", sans-serif;
@@ -108,25 +105,35 @@ input[name="deadline"] {
   width: 100%;
   text-align: left;
   font-size: 2rem;
-  transition: all 2s;
-  animation: showup 1s forwards ease-out;
+  transition: all 2.5s;
 }
 
-@keyframes showup {
-  0% {
-    opacity: 0;
-    transform: perspective(100px) rotateX(10deg) translateY(-100%);
-    -webkit-transform: perspective(100px) rotateX(10deg) translateY(-100%);
-  }
-  90% {
-    transform: perspective(100px) rotateX(5deg);
-    -webkit-transform: perspective(100px) rotateX(5deg);
-  }
-  100% {
-    opacity: 1;
-    transform: perspective(100px) rotateX(0) translateY(0);
-    -webkit-transform: perspective(100px) rotateX(0) translateY(0);
-  }
+.task-enter {
+  transform: perspective(100px) rotateX(100deg) translateY(-100%);
+  border-bottom-left-radius: 150%;
+  border-bottom-right-radius: 150%;
+  opacity: 0;
+}
+
+.task-enter.task-enter-active {
+  transform: perspective(100px) rotateX(0) translateY(0);
+  opacity: 1;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+}
+
+.task-exit {
+  transform: perspective(100px) rotateX(0) translateY(0);
+  opacity: 1;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+}
+
+.task-exit.task-exit-active {
+  transform: perspective(100px) rotateX(100deg) translateY(-100%);
+  border-bottom-left-radius: 150%;
+  border-bottom-right-radius: 150%;
+  opacity: 0;
 }
 
 .task-item.finished div p:first-child {
@@ -151,6 +158,8 @@ input[name="deadline"] {
   width: 20px;
   height: 20px;
   padding: 3px;
+  position: relative;
+  top: -10px;
 }
 
 .task-item:hover .delete-btn,
